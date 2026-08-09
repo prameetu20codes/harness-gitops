@@ -1,0 +1,45 @@
+# Platform Applications.
+# platform-gateway -> Argo Project "platform-project"
+# shared-redis     -> Argo Project "shared-project"
+# Both land in the "platform" namespace, and both Argo Projects map to Harness project "platform".
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-gateway
+  namespace: gitops
+spec:
+  project: platform-project
+  source:
+    repoURL: https://github.com/YOUR_ORG/harness-gitops-demo
+    targetRevision: main
+    path: manifests-repo/platform-gateway/base
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: shared-redis
+  namespace: gitops
+spec:
+  project: shared-project
+  source:
+    repoURL: https://github.com/YOUR_ORG/harness-gitops-demo
+    targetRevision: main
+    path: manifests-repo/shared-config/base
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

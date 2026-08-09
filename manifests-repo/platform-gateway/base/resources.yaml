@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: platform-gateway-conf
+  labels:
+    app: platform-gateway
+data:
+  default.conf: |
+    server {
+        listen 80;
+
+        location = / {
+            return 200 'platform gateway. routes: /web/ -> web tier, /api/ -> api tier\n';
+            add_header Content-Type text/plain;
+        }
+
+        # Cross-project routing to the web tier (web-project)
+        location /web/ {
+            proxy_pass http://web.web-prod.svc.cluster.local:80/;
+            proxy_set_header Host $host;
+        }
+
+        # Cross-project routing to the api tier (api-project)
+        location /api/ {
+            proxy_pass http://api.api-prod.svc.cluster.local:80/;
+            proxy_set_header Host $host;
+        }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform-gateway
+  labels:
+    app: platform-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platform-gateway
+  template:
+    metadata:
+      labels:
+        app: platform-gateway
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - name: conf
+              mountPath: /etc/nginx/conf.d
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 10
+      volumes:
+        - name: conf
+          configMap:
+            name: platform-gateway-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platform-gateway
+  labels:
+    app: platform-gateway
+spec:
+  selector:
+    app: platform-gateway
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

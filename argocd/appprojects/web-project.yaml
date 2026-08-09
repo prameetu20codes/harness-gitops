@@ -1,0 +1,22 @@
+# Argo Project (AppProject) for the web tier.
+# In Harness UI this becomes an "Argo Project" under the agent, mapped to Harness project "web".
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: web-project
+  namespace: gitops   # <-- the namespace where the account-level agent is installed
+spec:
+  description: Web tier applications (frontend)
+  sourceRepos:
+    - https://github.com/YOUR_ORG/harness-gitops-demo   # <-- edit to your repo
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: web-dev
+    - server: https://kubernetes.default.svc
+      namespace: web-prod
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

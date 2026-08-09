@@ -1,0 +1,42 @@
+# Web tier Applications (belong to Argo Project "web-project").
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web-dev
+  namespace: gitops
+spec:
+  project: web-project
+  source:
+    repoURL: https://github.com/YOUR_ORG/harness-gitops-demo
+    targetRevision: main
+    path: manifests-repo/web/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: web-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web-prod
+  namespace: gitops
+spec:
+  project: web-project
+  source:
+    repoURL: https://github.com/YOUR_ORG/harness-gitops-demo
+    targetRevision: main
+    path: manifests-repo/web/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: web-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,22 @@
+# Argo Project (AppProject) for the api tier.
+# Mapped to Harness project "api".
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: api-project
+  namespace: gitops
+spec:
+  description: API tier applications (backend)
+  sourceRepos:
+    - https://github.com/YOUR_ORG/harness-gitops-demo
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: api-dev
+    - server: https://kubernetes.default.svc
+      namespace: api-prod
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

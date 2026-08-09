@@ -1,0 +1,20 @@
+# Argo Project (AppProject) for platform-level, cross-cutting apps (the gateway).
+# Mapped to Harness project "platform".
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform-project
+  namespace: gitops
+spec:
+  description: Platform gateway that routes to web and api tiers
+  sourceRepos:
+    - https://github.com/YOUR_ORG/harness-gitops-demo
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: platform
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

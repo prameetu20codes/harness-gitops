@@ -1,0 +1,21 @@
+# Argo Project (AppProject) for shared infrastructure (redis).
+# NOTE: this is a SECOND Argo Project that also maps to Harness project "platform".
+# This demonstrates the many-Argo-projects -> one-Harness-project mapping.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: shared-project
+  namespace: gitops
+spec:
+  description: Shared backing services used across tiers (e.g. redis)
+  sourceRepos:
+    - https://github.com/YOUR_ORG/harness-gitops-demo
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: platform
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
