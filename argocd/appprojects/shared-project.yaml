@@ -9,7 +9,7 @@ metadata:
 spec:
   description: Shared backing services used across tiers (e.g. redis)
   sourceRepos:
-    - https://github.com/YOUR_ORG/harness-gitops-demo
+    - https://github.com/prameetu20codes/harness-gitops-demo
   destinations:
     - server: https://kubernetes.default.svc
       namespace: platform

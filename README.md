@@ -7,6 +7,9 @@ Everything here is generated locally. You push `manifests-repo/` to Git, then wi
 
 ## What gets built
 
+> **Harness org:** `prameetu20codes` — all downstream Harness projects below live under this org.
+> **Git org:** `prameetu20codes` — repo `https://github.com/prameetu20codes/harness-gitops-demo`.
+
 | Argo Project      | Harness Project | Application(s)                | Namespace ("place") | Talks to                        |
 |-------------------|-----------------|-------------------------------|---------------------|---------------------------------|
 | `web-project`     | `web`           | `web-dev`, `web-prod`         | `web-dev`, `web-prod` | `api` tier (`/api/` proxy)      |
@@ -59,10 +62,12 @@ argocd/                # REFERENCE for what to create in the Harness UI
 
 ## Before you start — edit these placeholders
 
-1. In every file under `argocd/`, replace `https://github.com/YOUR_ORG/harness-gitops-demo` with your repo URL.
+1. In every file under `argocd/`, replace `https://github.com/prameetu20codes/harness-gitops-demo` with your repo URL.
 2. In `argocd/appprojects/*.yaml`, `metadata.namespace: gitops` should match the namespace where your agent is installed.
 3. Destination `https://kubernetes.default.svc` = the same cluster the agent runs in (in-cluster). To deploy to a
    different cluster ("another place"), register that cluster and use its server URL instead.
+4. Harness org = **`prameetu20codes`**. The downstream Harness projects `web`, `api`, and `platform` are created
+   under this org.
 
 ## Step-by-step in the Harness UI
 
@@ -72,7 +77,8 @@ Do these in order — dependencies flow top to bottom.
    `Account Settings → GitOps → Agents → New GitOps Agent`. Choose Argo, install into namespace `gitops`,
    apply the generated YAML in your cluster, and wait for **Healthy / Connected** (like the panel in your screenshot).
 
-2. **Create the downstream Harness Projects.** Create `web`, `api`, and `platform` under your org.
+2. **Create the downstream Harness Projects.** Under Harness org **`prameetu20codes`**, create projects `web`,
+   `api`, and `platform`.
 
 3. **Register the Repository.** Under the agent’s GitOps settings → `Repositories`, add your Git repo URL
    (the one holding `manifests-repo/`). Use HTTPS + token or SSH key.

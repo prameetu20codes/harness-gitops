@@ -7,7 +7,7 @@ metadata:
 spec:
   project: api-project
   source:
-    repoURL: https://github.com/YOUR_ORG/harness-gitops-demo
+    repoURL: https://github.com/prameetu20codes/harness-gitops-demo
     targetRevision: main
     path: manifests-repo/api/overlays/dev
   destination:
@@ -28,7 +28,7 @@ metadata:
 spec:
   project: api-project
   source:
-    repoURL: https://github.com/YOUR_ORG/harness-gitops-demo
+    repoURL: https://github.com/prameetu20codes/harness-gitops-demo
     targetRevision: main
     path: manifests-repo/api/overlays/prod
   destination:

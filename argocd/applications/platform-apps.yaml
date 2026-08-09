@@ -10,7 +10,7 @@ metadata:
 spec:
   project: platform-project
   source:
-    repoURL: https://github.com/YOUR_ORG/harness-gitops-demo
+    repoURL: https://github.com/prameetu20codes/harness-gitops-demo
     targetRevision: main
     path: manifests-repo/platform-gateway/base
   destination:
@@ -31,7 +31,7 @@ metadata:
 spec:
   project: shared-project
   source:
-    repoURL: https://github.com/YOUR_ORG/harness-gitops-demo
+    repoURL: https://github.com/prameetu20codes/harness-gitops-demo
     targetRevision: main
     path: manifests-repo/shared-config/base
   destination:

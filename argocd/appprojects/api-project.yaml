@@ -8,7 +8,7 @@ metadata:
 spec:
   description: API tier applications (backend)
   sourceRepos:
-    - https://github.com/YOUR_ORG/harness-gitops-demo
+    - https://github.com/prameetu20codes/harness-gitops-demo
   destinations:
     - server: https://kubernetes.default.svc
       namespace: api-dev
